@@ -1,3 +1,4 @@
+import 'package:flutter_movie_app/widgets/custom_list_card_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
@@ -20,31 +21,46 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ValueListenableBuilder<Movies?>(
-          valueListenable: _moviesController.movies,
-          builder: (_, movies, __) {
-            if (movies == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return ListView.builder(
-              itemCount: movies.listMovies.length,
-              itemBuilder: (_, i) {
-                var movie = movies.listMovies[i];
-                return Text(
-                  movie.title,
-                  style: GoogleFonts.aldrich(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurpleAccent,
-                  ),
-                );
-              },
-            );
-          },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Text(
+                'Movies',
+                style: GoogleFonts.aldrich(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurpleAccent,
+                ),
+              ),
+              ValueListenableBuilder<Movies?>(
+                valueListenable: _moviesController.movies,
+                builder: (_, movies, __) {
+                  if (movies == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView.separated(
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Desabilita scroll da lista
+                    separatorBuilder: (_, __) => const Divider(height: 10),
+                    shrinkWrap: true,
+                    itemCount: movies.listMovies.length,
+                    itemBuilder: (_, i) {
+                      var movie = movies.listMovies[i];
+                      return CustomListCardWidget(
+                        movie: movie,
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
