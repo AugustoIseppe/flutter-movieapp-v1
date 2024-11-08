@@ -1,3 +1,4 @@
+import 'package:flutter_movie_app/decorators/movies_cache_repository_decorator.dart';
 import 'package:flutter_movie_app/widgets/custom_list_card_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final MovieController _moviesController =
-      MovieController(MoviesRepositoryImp(DioServiceImp()));
+  final MovieController _moviesController = MovieController(
+    MoviesCacheRepositoryDecorator(
+      MoviesRepositoryImp(
+        DioServiceImp(),
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +89,7 @@ class _HomePageState extends State<HomePage> {
                 cursorColor:
                     Colors.redAccent, // Cor do cursor para combinar com o ícone
               ),
+              const Divider(height: 20),
               ValueListenableBuilder<Movies?>(
                 valueListenable: _moviesController.movies,
                 builder: (_, movies, __) {
