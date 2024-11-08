@@ -1,6 +1,7 @@
 import 'package:flutter_movie_app/widgets/custom_list_card_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:flutter_movie_app/controllers/movie_cotroller.dart';
 import 'package:flutter_movie_app/models/movies_model.dart';
@@ -28,21 +29,31 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Text(
-                'Movies',
-                style: GoogleFonts.aldrich(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurpleAccent,
-                ),
+              ValueListenableBuilder<Movies?>(
+                valueListenable: _moviesController.movies,
+                builder: (__, movies, _) {
+                  return Visibility(
+                    visible: movies != null,
+                    child: Text(
+                      'Movies',
+                      style: GoogleFonts.artifika(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.deepPurpleAccent[700],
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                onChanged: _moviesController.onChanged,
               ),
               ValueListenableBuilder<Movies?>(
                 valueListenable: _moviesController.movies,
                 builder: (_, movies, __) {
                   if (movies == null) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return Center(child: Lottie.asset('assets/lottie.json'));
                   }
                   return ListView.separated(
                     physics:
