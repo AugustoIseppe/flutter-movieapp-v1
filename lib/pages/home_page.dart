@@ -48,6 +48,40 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 20),
               TextField(
                 onChanged: _moviesController.onChanged,
+                style: const TextStyle(
+                  color: Colors
+                      .white, // Texto em branco para contraste no tema dark
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Buscar filmes ...',
+                  hintStyle: TextStyle(
+                      color: Colors.grey[400]), // Cor sutil para o hint text
+                  filled: true,
+                  fillColor: const Color(
+                      0xFF1C1C1C), // Cor de fundo escura para combinar com o tema
+                  prefixIcon: const Icon(Icons.search,
+                      color: Colors.redAccent), // Ícone vermelho para destacar
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(10), // Bordas arredondadas
+                    borderSide: BorderSide(
+                      color: Colors.grey[800]!, // Borda sutil
+                      width: 1.5,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: const BorderSide(
+                      color:
+                          Colors.redAccent, // Cor de destaque ao focar no campo
+                      width: 2,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 15), // Espaçamento interno
+                ),
+                cursorColor:
+                    Colors.redAccent, // Cor do cursor para combinar com o ícone
               ),
               ValueListenableBuilder<Movies?>(
                 valueListenable: _moviesController.movies,
